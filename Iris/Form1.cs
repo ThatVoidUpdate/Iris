@@ -25,16 +25,35 @@ namespace Iris
         {
             InitializeComponent();
         }
+        
 
-        private void pnl_Image_Paint(object sender, PaintEventArgs e)
+        private void Form1_DragEnter(object sender, DragEventArgs e)
         {
-
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            for (int i = 0; i < s.Length; i++)
+            {
+                Console.WriteLine(s[i]);
+                Decode(s[i]);
+            }
+        }
+
+
+        public void Decode(string Filename)
         {
             //load image
-            FileBytes = File.ReadAllBytes("TestImg.IMG");
+            FileBytes = File.ReadAllBytes(Filename);
 
             //decode image
             string fileString = Encoding.Default.GetString(FileBytes);
@@ -93,7 +112,6 @@ namespace Iris
             }
 
             pbx_Image.Image = ConvertedBitmap;
-
         }
     }
 }
