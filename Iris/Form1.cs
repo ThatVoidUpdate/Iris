@@ -17,7 +17,6 @@ namespace Iris
         public byte[] FileBytes;
         public int LabelSize;
 
-        Image convertedImage;
         Bitmap ConvertedBitmap;
 
 
@@ -44,7 +43,6 @@ namespace Iris
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             for (int i = 0; i < s.Length; i++)
             {
-                Console.WriteLine(s[i]);
                 Decode(s[i]);
             }
         }
@@ -52,6 +50,8 @@ namespace Iris
 
         public void Decode(string Filename)
         {
+            Console.WriteLine($"Filename: {Filename}");
+
             //load image
             FileBytes = File.ReadAllBytes(Filename);
 
@@ -93,20 +93,45 @@ namespace Iris
             Target= Target.split('=')[1][1:-1]
             */
 
-            Regex TargetRegex = new Regex(@"TARGET_NAME='[\s\w]+'", RegexOptions.Compiled);
+            /*Regex TargetRegex = new Regex(@"TARGET_NAME='[\s\w]+'", RegexOptions.Compiled);
             matches = TargetRegex.Matches(Metadata);
-            String Target = matches[0].Value;
+            String Target = matches[0].Value.Split('=')[1];
+            Target = Target.Substring(1, Target.Length - 2);
 
-            Console.WriteLine($"Target: {Target.Split('=')[1]}");
+            Console.WriteLine($"Target: {Target}");
+            */
+            /*
+             * Get data format
+            Format = re.findall(r"FORMAT='\w+'", Metadata)[0]
+            Format = Format.split('=')[1][1:-1]
+             */
 
+            Regex FormatRegex = new Regex(@"FORMAT='\w+'", RegexOptions.Compiled);
+            matches = FormatRegex.Matches(Metadata);
+            String DataFormat = matches[0].Value.Split('=')[1];
+            DataFormat = DataFormat.Substring(1, DataFormat.Length - 2);
+
+            Console.WriteLine($"Data Format: {DataFormat}");
 
             //write image to pbx_Image
+
+            int[] ImageData = FileBytes.Skip(MetadataLength).Select(x => (int)x).ToArray();
+
+            if (DataFormat == "HALF")
+            {
+                Width = Width >> 1;
+                //ImageFileData = [((ImageFileData[x] << 8) + ImageFileData[x+1]) / 8  for x in range(0, len(ImageFileData), 2)]
+                //ImageData = Enumerable.Range(0, ImageData.Length).Where(x => x % 2 == 0).Select(x => (ImageData[x] << 8) + ImageData[x + 1]).ToArray();
+                ImageData = Enumerable.Range(0, ImageData.Length).Where(x => x % 2 == 0).Select(x => ((ImageData[x] << 8) + ImageData[x + 1]) >> 3).ToArray();
+                ImageData = Enumerable.Range(0, ImageData.Length).Select(x => ImageData[x] > 255 ? 255 : ImageData[x]).ToArray();
+            }
+
             ConvertedBitmap = new Bitmap(Width, Height);
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    Color color = Color.FromArgb(FileBytes[MetadataLength + (y * Width) + x], FileBytes[MetadataLength + (y * Width) + x], FileBytes[MetadataLength + (y * Width) + x]);
+                    Color color = Color.FromArgb(ImageData[(y * Width) + x], ImageData[(y * Width) + x], ImageData[(y * Width) + x]);
                     ConvertedBitmap.SetPixel(x, y, color);
                 }
             }
