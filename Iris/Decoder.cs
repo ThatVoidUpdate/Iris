@@ -31,6 +31,14 @@ namespace Iris
             Console.WriteLine($"Metadata length: {MetadataLength}");
             string Metadata = fileString.Substring(0, MetadataLength);
 
+            /*Console.WriteLine("Metadata:");
+            foreach (string item in Metadata.Split(new string[] { "  "}, StringSplitOptions.None))
+            {
+                Console.WriteLine(item);
+            }*/
+
+            
+
             /*
              * Get width and height:
             width = re.findall(r"RECSIZE=\d*\s", Metadata)[0]
@@ -99,7 +107,7 @@ namespace Iris
                 }
             }
 
-            return new DecodedImage(ConvertedBitmap, new Dictionary<string, string>());
+            return new DecodedImage(ConvertedBitmap, Metadata.Split(new string[]{ "  " }, StringSplitOptions.None));
         }
 
         /*public static Bitmap Decode(string ImgPath, string LblPath)

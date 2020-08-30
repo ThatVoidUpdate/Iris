@@ -10,9 +10,9 @@ namespace Iris
     class DecodedImage
     {
         public Bitmap Image;
-        public Dictionary<string, string> Metadata;
+        public string[] Metadata;
 
-        public DecodedImage(Bitmap _Image, Dictionary<string, string> _Metadata)
+        public DecodedImage(Bitmap _Image, string[] _Metadata)
         {
             Image = _Image;
             Metadata = _Metadata;

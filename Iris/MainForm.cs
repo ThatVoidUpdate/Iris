@@ -37,6 +37,7 @@ namespace Iris
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             DecodedImage decodedImage = Decoder.Decode(s[0]);
             pbx_Image.Image = decodedImage.Image;
+            lbx_Properties.Items.AddRange(decodedImage.Metadata);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
