@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Iris
 {
     class Decoder
     {
-        public static DecodedImage Decode(string ImgPath)
+        public static DecodedImage Decode(string ImgPath, ProgressBar progressBar)
         {
             Console.WriteLine($"Filename: {ImgPath}");
 
@@ -98,6 +99,8 @@ namespace Iris
             }
 
             Bitmap ConvertedBitmap = new Bitmap(Width, Height);
+            progressBar.Visible = true;
+            progressBar.Maximum = Height;
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -105,7 +108,9 @@ namespace Iris
                     Color color = Color.FromArgb(ImageData[(y * Width) + x], ImageData[(y * Width) + x], ImageData[(y * Width) + x]);
                     ConvertedBitmap.SetPixel(x, y, color);
                 }
+                progressBar.Value = y;
             }
+            progressBar.Visible = false;
 
             return new DecodedImage(ConvertedBitmap, Metadata.Split(new string[]{ "  ", "\r\n" }, StringSplitOptions.None));
         }

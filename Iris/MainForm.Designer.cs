@@ -37,6 +37,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.pgs_Decode = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_Image)).BeginInit();
             this.mst_Menu.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +56,7 @@
             this.lbx_Properties.FormattingEnabled = true;
             this.lbx_Properties.Location = new System.Drawing.Point(519, 27);
             this.lbx_Properties.Name = "lbx_Properties";
-            this.lbx_Properties.Size = new System.Drawing.Size(271, 498);
+            this.lbx_Properties.Size = new System.Drawing.Size(271, 524);
             this.lbx_Properties.TabIndex = 0;
             // 
             // mst_Menu
@@ -108,12 +109,22 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // pgs_Decode
+            // 
+            this.pgs_Decode.Location = new System.Drawing.Point(12, 533);
+            this.pgs_Decode.Name = "pgs_Decode";
+            this.pgs_Decode.Size = new System.Drawing.Size(501, 23);
+            this.pgs_Decode.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pgs_Decode.TabIndex = 3;
+            this.pgs_Decode.Visible = false;
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(802, 536);
+            this.ClientSize = new System.Drawing.Size(802, 561);
+            this.Controls.Add(this.pgs_Decode);
             this.Controls.Add(this.lbx_Properties);
             this.Controls.Add(this.pbx_Image);
             this.Controls.Add(this.mst_Menu);
@@ -141,6 +152,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ProgressBar pgs_Decode;
     }
 }
 
