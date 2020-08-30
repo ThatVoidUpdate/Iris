@@ -77,7 +77,7 @@ namespace Iris
             Format = Format.split('=')[1][1:-1]
              */
 
-            Regex FormatRegex = new Regex(@"(FORMAT|SAMPLE_TYPE)\s?=\s?\w+\s", RegexOptions.Compiled);
+            Regex FormatRegex = new Regex(@"(FORMAT|SAMPLE_TYPE)\s?=\s?\S+\s", RegexOptions.Compiled);
             matches = FormatRegex.Matches(Metadata);
             String DataFormat = matches[0].Value.Split('=')[1];
             DataFormat = DataFormat.Substring(1, DataFormat.Length - 2);
