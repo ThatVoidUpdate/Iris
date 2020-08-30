@@ -14,12 +14,6 @@ namespace Iris
 {
     public partial class Form1 : Form
     {
-        public byte[] FileBytes;
-        public int LabelSize;
-
-        Bitmap ConvertedBitmap;
-
-
         public Form1()
         {
             InitializeComponent();
@@ -41,10 +35,8 @@ namespace Iris
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            for (int i = 0; i < s.Length; i++)
-            {
-                pbx_Image.Image = Decoder.Decode(s[i]);
-            }
+            DecodedImage decodedImage = Decoder.Decode(s[0]);
+            pbx_Image.Image = decodedImage.Image;
         }        
     }
 }

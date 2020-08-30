@@ -28,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnl_Controls = new System.Windows.Forms.Panel();
             this.pbx_Image = new System.Windows.Forms.PictureBox();
+            this.lbx_Properties = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_Image)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pnl_Controls
-            // 
-            this.pnl_Controls.Location = new System.Drawing.Point(519, 13);
-            this.pnl_Controls.Name = "pnl_Controls";
-            this.pnl_Controls.Size = new System.Drawing.Size(270, 500);
-            this.pnl_Controls.TabIndex = 0;
             // 
             // pbx_Image
             // 
@@ -49,14 +42,22 @@
             this.pbx_Image.TabIndex = 1;
             this.pbx_Image.TabStop = false;
             // 
+            // lbx_Properties
+            // 
+            this.lbx_Properties.FormattingEnabled = true;
+            this.lbx_Properties.Location = new System.Drawing.Point(519, 12);
+            this.lbx_Properties.Name = "lbx_Properties";
+            this.lbx_Properties.Size = new System.Drawing.Size(271, 498);
+            this.lbx_Properties.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(802, 525);
+            this.Controls.Add(this.lbx_Properties);
             this.Controls.Add(this.pbx_Image);
-            this.Controls.Add(this.pnl_Controls);
             this.Name = "Form1";
             this.Text = "Form1";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
@@ -67,9 +68,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnl_Controls;
         private System.Windows.Forms.PictureBox pbx_Image;
+        private System.Windows.Forms.ListBox lbx_Properties;
     }
 }
 

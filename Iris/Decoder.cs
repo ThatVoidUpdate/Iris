@@ -11,7 +11,7 @@ namespace Iris
 {
     class Decoder
     {
-        public static Bitmap Decode(string ImgPath)
+        public static DecodedImage Decode(string ImgPath)
         {
             Console.WriteLine($"Filename: {ImgPath}");
 
@@ -99,7 +99,7 @@ namespace Iris
                 }
             }
 
-            return ConvertedBitmap;
+            return new DecodedImage(ConvertedBitmap, new Dictionary<string, string>());
         }
 
         /*public static Bitmap Decode(string ImgPath, string LblPath)
