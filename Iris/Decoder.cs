@@ -24,7 +24,7 @@ namespace Iris
             Regex NumberRegex = new Regex(@"\d+", RegexOptions.Compiled);
 
             //Find the metadata length
-            Regex LabelSizeRegex = new Regex(@"LBLSIZE=\d*\s", RegexOptions.Compiled);
+            Regex LabelSizeRegex = new Regex(@"(LBLSIZE|RECORD_BYTES)\s?=\s?\d*\s", RegexOptions.Compiled);
             MatchCollection matches = LabelSizeRegex.Matches(fileString);
 
             int MetadataLength = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
@@ -48,11 +48,11 @@ namespace Iris
             height = int(re.findall(r"\d+", height)[0])
             */
 
-            Regex WidthRegex = new Regex(@"RECSIZE=\d*\s", RegexOptions.Compiled);
+            Regex WidthRegex = new Regex(@"(RECSIZE|LINE_SAMPLES)\s?=\s?\d*\s", RegexOptions.Compiled);
             matches = WidthRegex.Matches(Metadata);
             int Width = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
-            Regex HeightRegex = new Regex(@"NL=\d*\s", RegexOptions.Compiled);
+            Regex HeightRegex = new Regex(@"(NL|LINES)\s?=\s?\d*\s", RegexOptions.Compiled);
             matches = HeightRegex.Matches(Metadata);
             int Height = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
@@ -77,7 +77,7 @@ namespace Iris
             Format = Format.split('=')[1][1:-1]
              */
 
-            Regex FormatRegex = new Regex(@"FORMAT='\w+'", RegexOptions.Compiled);
+            Regex FormatRegex = new Regex(@"(FORMAT|SAMPLE_TYPE)\s?=\s?\w+\s", RegexOptions.Compiled);
             matches = FormatRegex.Matches(Metadata);
             String DataFormat = matches[0].Value.Split('=')[1];
             DataFormat = DataFormat.Substring(1, DataFormat.Length - 2);
@@ -107,7 +107,7 @@ namespace Iris
                 }
             }
 
-            return new DecodedImage(ConvertedBitmap, Metadata.Split(new string[]{ "  " }, StringSplitOptions.None));
+            return new DecodedImage(ConvertedBitmap, Metadata.Split(new string[]{ "  ", "\r\n" }, StringSplitOptions.None));
         }
 
         /*public static Bitmap Decode(string ImgPath, string LblPath)

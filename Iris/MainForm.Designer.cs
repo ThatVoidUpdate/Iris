@@ -113,10 +113,11 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(802, 567);
+            this.ClientSize = new System.Drawing.Size(802, 536);
             this.Controls.Add(this.lbx_Properties);
             this.Controls.Add(this.pbx_Image);
             this.Controls.Add(this.mst_Menu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mst_Menu;
             this.Name = "MainForm";
             this.Text = "IRIS Photo Viewer";
