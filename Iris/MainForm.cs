@@ -12,9 +12,9 @@ using System.Text.RegularExpressions;
 
 namespace Iris
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -37,6 +37,16 @@ namespace Iris
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             DecodedImage decodedImage = Decoder.Decode(s[0]);
             pbx_Image.Image = decodedImage.Image;
-        }        
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutForm().ShowDialog();
+        }
     }
 }
