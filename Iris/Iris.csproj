@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="DecodedImage.cs" />
     <Compile Include="Decoder.cs" />
+    <Compile Include="Decoders\CassiniDecoder.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

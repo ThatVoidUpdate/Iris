@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using Iris.Decoders;
 
 namespace Iris
 {
     public partial class MainForm : Form
     {
+        public static Decoder SelectedDecoder;
         public MainForm()
         {
             InitializeComponent();
+            SelectedDecoder = new CassiniDecoder();
         }
         
 
@@ -35,7 +38,11 @@ namespace Iris
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            DecodedImage decodedImage = Decoder.Decode(s[0], pgs_Decode);
+
+
+            DecodedImage decodedImage = SelectedDecoder.Decode(s[0], pgs_Decode);
+
+
             pbx_Image.Image = decodedImage.Image;
             lbx_Properties.Items.Clear();
             lbx_Properties.Items.AddRange(decodedImage.Metadata);

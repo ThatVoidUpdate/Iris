@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Iris
 {
-    class DecodedImage
+    public class DecodedImage
     {
         public Bitmap Image;
         public string[] Metadata;
