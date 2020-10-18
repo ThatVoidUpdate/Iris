@@ -7,4 +7,6 @@ Image files can be downloaded from here: https://pds-imaging.jpl.nasa.gov/data/
 
 Supported missions:
 * Cassini
-* Mars Global Surveyor
+* Voyager
+
+IMG files can either be loaded through the menu, or by dragging them directly onto the window.
