@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using Iris.Decoders;
@@ -11,7 +12,7 @@ namespace Iris
         public MainForm()
         {
             InitializeComponent();
-            SelectedDecoder = new CassiniDecoder();
+            SelectedDecoder = new VoyagerDecoder();
         }
         
 
@@ -42,6 +43,7 @@ namespace Iris
                     pbx_Image.Image = decodedImage.Image;
                     lbx_Properties.Items.Clear();
                     lbx_Properties.Items.AddRange(decodedImage.Metadata);
+                    saveToolStripMenuItem.Enabled = true;
                 }
                 catch (ArgumentException exception)
                 {
@@ -52,9 +54,7 @@ namespace Iris
             {
                 MessageBox.Show("Dropped file is not an IMG file", "File Type Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
-            }
-
-            
+            }            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +65,20 @@ namespace Iris
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutForm().ShowDialog();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PNG Image|*.png";
+            saveFileDialog.Title = "Save the Image";
+            saveFileDialog.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog.FileName != "")
+            {
+                pbx_Image.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
+            }            
         }
     }
 }
