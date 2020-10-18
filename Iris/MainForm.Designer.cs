@@ -39,6 +39,10 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pgs_Decode = new System.Windows.Forms.ProgressBar();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.missionTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.voyagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cassiniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_Image)).BeginInit();
             this.mst_Menu.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +68,7 @@
             // 
             this.mst_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.mst_Menu.Location = new System.Drawing.Point(0, 0);
             this.mst_Menu.Name = "mst_Menu";
@@ -130,6 +135,37 @@
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.missionTypeToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // missionTypeToolStripMenuItem
+            // 
+            this.missionTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.voyagerToolStripMenuItem,
+            this.cassiniToolStripMenuItem});
+            this.missionTypeToolStripMenuItem.Name = "missionTypeToolStripMenuItem";
+            this.missionTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.missionTypeToolStripMenuItem.Text = "Mission Type";
+            // 
+            // voyagerToolStripMenuItem
+            // 
+            this.voyagerToolStripMenuItem.Name = "voyagerToolStripMenuItem";
+            this.voyagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.voyagerToolStripMenuItem.Text = "Voyager";
+            this.voyagerToolStripMenuItem.Click += new System.EventHandler(this.voyagerToolStripMenuItem_Click);
+            // 
+            // cassiniToolStripMenuItem
+            // 
+            this.cassiniToolStripMenuItem.Name = "cassiniToolStripMenuItem";
+            this.cassiniToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cassiniToolStripMenuItem.Text = "Cassini";
+            this.cassiniToolStripMenuItem.Click += new System.EventHandler(this.cassiniToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -166,6 +202,10 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar pgs_Decode;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem missionTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem voyagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cassiniToolStripMenuItem;
     }
 }
 

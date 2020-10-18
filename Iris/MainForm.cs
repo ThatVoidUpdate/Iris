@@ -9,6 +9,7 @@ namespace Iris
     public partial class MainForm : Form
     {
         public static Decoder SelectedDecoder;
+        public static string IMGpath;
         public MainForm()
         {
             InitializeComponent();
@@ -19,6 +20,7 @@ namespace Iris
         {
             try
             {
+                IMGpath = path;
                 DecodedImage decodedImage = SelectedDecoder.Decode(path, pgs_Decode);
                 pbx_Image.Image = decodedImage.Image;
                 lbx_Properties.Items.Clear();
@@ -98,6 +100,30 @@ namespace Iris
                     AttemptDecode(openFileDialog.FileName);
                 }
             }
+        }
+
+        private void voyagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            voyagerToolStripMenuItem.Checked = true;
+            cassiniToolStripMenuItem.Checked = false;
+            SelectedDecoder = new VoyagerDecoder();            
+            if (IMGpath != null)
+            {
+                AttemptDecode(IMGpath);
+            }
+            
+        }
+
+        private void cassiniToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            voyagerToolStripMenuItem.Checked = false;
+            cassiniToolStripMenuItem.Checked = true;
+            SelectedDecoder = new CassiniDecoder();
+            if (IMGpath != null)
+            {
+                AttemptDecode(IMGpath);
+            }
+
         }
     }
 }
