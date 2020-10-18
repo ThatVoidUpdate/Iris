@@ -48,7 +48,6 @@ namespace Iris
         {
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-            Console.WriteLine(s[0]);
             if (Path.GetExtension(s[0]).ToLower() == ".img")
             {
                 AttemptDecode(s[0]);

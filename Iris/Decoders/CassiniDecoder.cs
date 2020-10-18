@@ -14,7 +14,6 @@ namespace Iris.Decoders
     {
         public override DecodedImage Decode(string ImgPath, ProgressBar progressBar)
         {
-            Console.WriteLine($"Filename: {ImgPath}");
 
             //Load file bytes
             byte[] FileBytes = File.ReadAllBytes(ImgPath);
@@ -33,7 +32,6 @@ namespace Iris.Decoders
             }
 
             int MetadataLength = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
-            Console.WriteLine($"Metadata length: {MetadataLength}");
             string Metadata = FileString.Substring(0, MetadataLength);
 
             //Get width, height and line skip
@@ -61,8 +59,6 @@ namespace Iris.Decoders
             }
             int LineSkip = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
-            Console.WriteLine($"Dimensions: {Width}x{Height}, Skip per line: {LineSkip}");
-
             //Extract the data format, either BYTE or HALF for Cassini images
             Regex FormatRegex = new Regex(@"(FORMAT)\s?=\s?\S+\s", RegexOptions.Compiled);
             matches = FormatRegex.Matches(Metadata);
@@ -72,8 +68,6 @@ namespace Iris.Decoders
             }
             String DataFormat = matches[0].Value.Split('=')[1];
             DataFormat = DataFormat.Substring(1, DataFormat.Length - 3);
-
-            Console.WriteLine($"Data Format: {DataFormat}");
 
             //Crop the metadata off the top of the file
             int[] ImageData = FileBytes.Skip(MetadataLength).Select(x => (int)x).ToArray();
