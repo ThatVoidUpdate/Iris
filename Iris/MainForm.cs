@@ -14,6 +14,22 @@ namespace Iris
             InitializeComponent();
             SelectedDecoder = new VoyagerDecoder();
         }
+
+        public void AttemptDecode(string path)
+        {
+            try
+            {
+                DecodedImage decodedImage = SelectedDecoder.Decode(path, pgs_Decode);
+                pbx_Image.Image = decodedImage.Image;
+                lbx_Properties.Items.Clear();
+                lbx_Properties.Items.AddRange(decodedImage.Metadata);
+                saveToolStripMenuItem.Enabled = true;
+            }
+            catch (ArgumentException exception)
+            {
+                MessageBox.Show($"Error processing IMG file: {exception.Message}", "Processing Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
         
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -30,31 +46,19 @@ namespace Iris
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
             Console.WriteLine(s[0]);
-
             if (Path.GetExtension(s[0]).ToLower() == ".img")
             {
-                try
-                {
-                    DecodedImage decodedImage = SelectedDecoder.Decode(s[0], pgs_Decode);
-                    pbx_Image.Image = decodedImage.Image;
-                    lbx_Properties.Items.Clear();
-                    lbx_Properties.Items.AddRange(decodedImage.Metadata);
-                    saveToolStripMenuItem.Enabled = true;
-                }
-                catch (ArgumentException exception)
-                {
-                    MessageBox.Show($"Error processing IMG file: {exception.Message}", "Processing Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                AttemptDecode(s[0]);
             }
             else
             {
-                MessageBox.Show("Dropped file is not an IMG file", "File Type Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("File is not an IMG file", "File Type Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
-            }            
+            }
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,16 +73,32 @@ namespace Iris
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PNG Image|*.png";
-            saveFileDialog.Title = "Save the Image";
-            saveFileDialog.ShowDialog();
-
-            // If the file name is not an empty string open it for saving.
-            if (saveFileDialog.FileName != "")
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                pbx_Image.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
-            }            
+                saveFileDialog.Filter = "PNG Image|*.png";
+                saveFileDialog.ShowDialog();
+
+                // If the file name is not an empty string open it for saving.
+                if (saveFileDialog.FileName != "")
+                {
+                    pbx_Image.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
+                }
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "IMG Files|*.IMG";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    AttemptDecode(openFileDialog.FileName);
+                }
+            }
         }
     }
 }
