@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using Iris.Decoders;
 
@@ -10,7 +11,7 @@ namespace Iris
         public MainForm()
         {
             InitializeComponent();
-            SelectedDecoder = new VoyagerDecoder();
+            SelectedDecoder = new CassiniDecoder();
         }
         
 
@@ -28,15 +29,32 @@ namespace Iris
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
+            
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
+            Console.WriteLine(s[0]);
 
-            DecodedImage decodedImage = SelectedDecoder.Decode(s[0], pgs_Decode);
+            if (Path.GetExtension(s[0]).ToLower() == ".img")
+            {
+                try
+                {
+                    DecodedImage decodedImage = SelectedDecoder.Decode(s[0], pgs_Decode);
+                    pbx_Image.Image = decodedImage.Image;
+                    lbx_Properties.Items.Clear();
+                    lbx_Properties.Items.AddRange(decodedImage.Metadata);
+                }
+                catch (ArgumentException exception)
+                {
+                    MessageBox.Show($"Error processing IMG file: {exception.Message}", "Processing Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Dropped file is not an IMG file", "File Type Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
-
-            pbx_Image.Image = decodedImage.Image;
-            lbx_Properties.Items.Clear();
-            lbx_Properties.Items.AddRange(decodedImage.Metadata);
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

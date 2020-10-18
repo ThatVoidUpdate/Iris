@@ -27,6 +27,11 @@ namespace Iris.Decoders
             Regex LabelSizeRegex = new Regex(@"(LBLSIZE)\s?=\s?\d*\s", RegexOptions.Compiled);
             MatchCollection matches = LabelSizeRegex.Matches(FileString);
 
+            if (matches.Count == 0)
+            {
+                throw new ArgumentException("Metadata could not be found in file", "ImgPath");
+            }
+
             int MetadataLength = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
             Console.WriteLine($"Metadata length: {MetadataLength}");
             string Metadata = FileString.Substring(0, MetadataLength);
@@ -34,14 +39,26 @@ namespace Iris.Decoders
             //Get width, height and line skip
             Regex WidthRegex = new Regex(@"(NS)\s?=\s?\d*\s", RegexOptions.Compiled);
             matches = WidthRegex.Matches(Metadata);
+            if (matches.Count == 0)
+            {
+                throw new ArgumentException("Width could not be found in file", "ImgPath");
+            }
             int Width = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
             Regex HeightRegex = new Regex(@"(NL)\s?=\s?\d*\s", RegexOptions.Compiled);
             matches = HeightRegex.Matches(Metadata);
+            if (matches.Count == 0)
+            {
+                throw new ArgumentException("Height could not be found in file", "ImgPath");
+            }
             int Height = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
             Regex SkipRegex = new Regex(@"(NBB)\s?=\s?\d*\s", RegexOptions.Compiled);
             matches = SkipRegex.Matches(Metadata);
+            if (matches.Count == 0)
+            {
+                throw new ArgumentException("Line skip could not be found in file", "ImgPath");
+            }
             int LineSkip = Convert.ToInt32(NumberRegex.Matches(matches[0].Value)[0].Value);
 
             Console.WriteLine($"Dimensions: {Width}x{Height}, Skip per line: {LineSkip}");
@@ -49,6 +66,10 @@ namespace Iris.Decoders
             //Extract the data format, either BYTE or HALF for Cassini images
             Regex FormatRegex = new Regex(@"(FORMAT)\s?=\s?\S+\s", RegexOptions.Compiled);
             matches = FormatRegex.Matches(Metadata);
+            if (matches.Count == 0)
+            {
+                throw new ArgumentException("Format could not be found in file", "ImgPath");
+            }
             String DataFormat = matches[0].Value.Split('=')[1];
             DataFormat = DataFormat.Substring(1, DataFormat.Length - 3);
 
